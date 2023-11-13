@@ -32,7 +32,12 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/lib/jquery/jquery-3.2.1.min.js",
+              "src/assets/lib/popper/popper.min.js",
+              "src/assets/lib/bootstrap/dist/js/bootstrap.min.js",
+              "src/assets/dist/js/perfect-scrollbar.jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -53,7 +58,13 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
