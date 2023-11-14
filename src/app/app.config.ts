@@ -6,14 +6,14 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import {provideAnimations} from '@angular/platform-browser/animations'
 import { InjectSessionInterceptor } from './core/interceptors';
 
-export const appConfig: ApplicationConfig = {
+export const appConfig: ApplicationConfig = { 
   providers: [
     provideRouter(routes),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InjectSessionInterceptor,
       multi: true
-    },
+    }, 
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations()
   ]

@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { MarcaPageComponent, MedidaPageComponent } from "./pages";
+import { MarcaPageComponent, MedidaPageComponent, ProductPageComponent } from "./pages";
 
 
 export const routes:Routes = [
@@ -12,5 +12,10 @@ export const routes:Routes = [
         path: 'marca',
         title: 'Marca',
         component: MarcaPageComponent
+    },
+    {
+        path: 'product',
+        title: 'Producto',
+        component: ProductPageComponent
     }
 ]

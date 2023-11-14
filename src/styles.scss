@@ -1,6 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "ngx-toastr/toastr";
 
+/*Modal*/
+.backdrop-custom-modal {
+    z-index: 100 !important;
+}
+
+/*Form */
+.form-control-border:focus {
+    border-color: blue !important;
+}
+
+
 /*Loader */
 .loading {
   display: inline-block;

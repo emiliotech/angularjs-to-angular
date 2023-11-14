@@ -43,7 +43,10 @@
             <!-- text-->
             <div class="dropdown-divider"></div>
             <!-- text-->
-            <a href="javascript:void(0)" (click)="logout()" class="dropdown-item"
+            <a
+              href="javascript:void(0)"
+              (click)="logout()"
+              class="dropdown-item"
               ><i class="fas fa-power-off"></i> Logout</a
             >
             <!-- text-->
@@ -53,7 +56,20 @@
     </div>
     <!-- Sidebar navigation-->
     <nav class="sidebar-nav">
-      <ul id="sidebarnav"> 
+      <ul id="sidebarnav">
+        <li>
+          <a
+            class="has-arrow waves-effect waves-dark"
+            href="javascript:void(0)"
+            aria-expanded="false"
+            ><i class="icon-speedometer"></i
+            ><span class="hide-menu">Configuración </span></a
+          >
+          <ul aria-expanded="false" class="collapse">
+            <li><a routerLink="config/medida">Medida</a></li>
+            <li><a routerLink="config/marca">Marca</a></li>
+          </ul>
+        </li>
         <li>
           <a
             class="has-arrow waves-effect waves-dark"
@@ -65,6 +81,60 @@
           <ul aria-expanded="false" class="collapse">
             <li><a routerLink="inventory/medida">Medida</a></li>
             <li><a routerLink="inventory/marca">Marca</a></li>
+            <li><a routerLink="inventory/product">Producto</a></li>
+          </ul>
+        </li>
+        <li>
+          <a
+            class="has-arrow waves-effect waves-dark"
+            href="javascript:void(0)"
+            aria-expanded="false"
+            ><i class="icon-speedometer"></i
+            ><span class="hide-menu">Comprob. Electrónicas </span></a
+          >
+          <ul aria-expanded="false" class="collapse">
+            <li><a routerLink="factElect/medida">Medida</a></li>
+            <li><a routerLink="factElect/marca">Marca</a></li>
+          </ul>
+        </li>
+        <li>
+          <a
+            class="has-arrow waves-effect waves-dark"
+            href="javascript:void(0)"
+            aria-expanded="false"
+          >
+            <i class="icon-speedometer"></i>
+            <span class="hide-menu"> Otros Comprobantes </span>
+          </a>
+          <ul aria-expanded="false" class="collapse">
+            <li><a routerLink="sale/medida">Medida</a></li>
+            <li><a routerLink="sale/marca">Marca</a></li>
+          </ul>
+        </li>
+        <li>
+          <a
+            class="has-arrow waves-effect waves-dark"
+            href="javascript:void(0)"
+            aria-expanded="false"
+            ><i class="icon-speedometer"></i
+            ><span class="hide-menu">Compras </span></a
+          >
+          <ul aria-expanded="false" class="collapse">
+            <li><a routerLink="purchase/medida">Medida</a></li>
+            <li><a routerLink="purchase/marca">Marca</a></li>
+          </ul>
+        </li>
+        <li>
+          <a
+            class="has-arrow waves-effect waves-dark"
+            href="javascript:void(0)"
+            aria-expanded="false"
+            ><i class="icon-speedometer"></i
+            ><span class="hide-menu">Contabilidad </span></a
+          >
+          <ul aria-expanded="false" class="collapse">
+            <li><a routerLink="contabilidad/medida">Cliente</a></li>
+            <li><a routerLink="contabilidad/marca">Marca</a></li>
           </ul>
         </li>
       </ul>

@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h4 class="modal-title">Nuevo Producto</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="closeModal()"
+  >&times;</button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="description">Descripción: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-border" placeholder="...">
+            </div>
+        </div>
+        <div class="col-6">
+             <div class="form-group">
+                <label for="description">Categoria: <span class="text-danger">*</span></label>
+                <select name="" id="" class="form-control form-control-border">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+     <button
+    type="button"
+    class="btn btn-success" 
+  >
+    <i class="ti-save"></i> Guardar
+  </button>
+  <button
+    type="button"
+    class="btn btn-dark"
+    (click)="closeModal()" 
+  >
+  &times; Cerrar
+  </button>
+</div>
