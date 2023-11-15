@@ -1,42 +1,232 @@
 <div class="modal-header">
   <h4 class="modal-title">Nuevo Producto</h4>
-  <button
-    type="button"
-    class="close"
-    aria-label="Close"
-    (click)="closeModal()"
-  >&times;</button>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    &times;
+  </button>
 </div>
 <div class="modal-body">
-    <div class="row">
-        <div class="col-6">
-            <div class="form-group">
-                <label for="description">Descripción: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-border" placeholder="...">
-            </div>
-        </div>
-        <div class="col-6">
-             <div class="form-group">
-                <label for="description">Categoria: <span class="text-danger">*</span></label>
-                <select name="" id="" class="form-control form-control-border">
-                    <option value=""></option>
-                </select>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="description"
+          >Descripción: <span class="text-danger">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control form-control-border"
+          placeholder="..."
+        />
+      </div>
     </div>
+    <div class="col-6">
+      <div class="form-group">
+        <label class="control-label"
+          >Subcategoría: <span class="text-danger">*</span></label
+        >
+        <div class="input-group">
+          <select
+            class="form-control border-select"
+            ng-model="data.idSubFamilia"
+            ng-change="getArticuloCodigo()"
+            ng-options="sf.idSubFamilia as sf.subFamilia group by sf.familia  for sf in subFamilias"
+          ></select>
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary btn-sm"
+              appSubcategoryModal
+              type="button"
+              tabindex="-1"
+            >
+              <i class="fa fa-plus fa-xs"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+          <div class="form-group">
+            <label for="">Código: <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              ng-model="data.codigo"
+              class="form-control form-control-border"
+              placeholder="Ej: COM050"
+            />
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+          <div class="form-group">
+            <label for="">Código Aux: </label>
+            <input
+              type="text"
+              ng-model="data.codigoAuxiliar"
+              class="form-control form-control-border"
+              placeholder="Ej: COM050"
+            />
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+          <div class="form-group">
+            <label for=""
+              >Código de Barra: <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control form-control-border"
+                ng-model="data.codigoBarra"
+                touppercase
+                placeholder="H20089"
+                value=""
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  ng-click="getBarcode()"
+                >
+                  <i class="fas fa-barcode"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+          <div class="form-group">
+            <label for=""
+              >Tipo Artículo: <span class="text-danger">*</span>
+            </label>
+            <select
+              class="form-control form-control-border"
+              ng-model="data.idTipoArticulo"
+            >
+              <option
+                ng-value="item.idTipoArticulo"
+                ng-repeat="item in tipoArticulos"
+              ></option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+          <div class="form-group">
+            <label for="">U. Medida</label>
+            <div class="input-group">
+              <select
+                class="form-control form-control-border"
+                ng-model="data.idMedida"
+                ng-focus="delayFocus('.medida')"
+              >
+                <option
+                  ng-value="item.idMedida"
+                  ng-repeat="item in medidas"
+                ></option>
+              </select>
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  btn-add-update-medida
+                  results="resultModalMedida(item)"
+                  tabindex="-1"
+                >
+                  <i class="fa fa-plus fa-xs"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-show="tipoRegistro === 1">
+    <div class="form-group col-lg-2 col-md-6 col-sm-6 col-12">
+      <label for="">Tipo Iva: </label>
+      <select
+        class="form-control border-select tipoIva"
+        ng-model="data.idTipoIva"
+        ng-change="recalculateTarifaAdd()"
+        ng-focus="delayFocus('.tipoIva')"
+        ng-disabled="!articlePermission.isUpdatePrice"
+      >
+        <option ng-value="item.idTipoIva" ng-repeat="item in tipoIvas"></option>
+      </select>
+    </div>
+    <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6">
+      <label for="">Precio Costo: <span class="text-danger">*</span></label>
+      <input
+        type="text"
+        class="form-control border-select precioCosto"
+        decimal
+        ng-focus="delayFocus('.precioCosto')"
+        ng-model="data.precioCosto"
+        ng-blur="redondearPrecioCosto()"
+        ng-change="recalculateTarifaAdd()"
+        placeholder="0.00"
+      />
+    </div>
+    <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6">
+      <label for="">Precio Sin Subsidio:</label>
+      <input
+        type="text"
+        class="form-control border-select precioSinSubsidio"
+        decimal
+        ng-focus="delayFocus('.precioSinSubsidio')"
+        ng-model="data.precioSinSubsidio"
+        placeholder="0.00"
+      />
+    </div>
+    <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+      <div class="row align-items-center">
+        <div class="col-12">
+          <mat-checkbox>Inventario</mat-checkbox>
+        </div>
+        <div class="col-12">
+          <mat-checkbox>Fraccionable</mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-6 col-12">
+      <div class="form-group text-center">
+        <label>Adicionales: </label>
+        <p><mat-checkbox></mat-checkbox></p>
+      </div>
+    </div>
+    <div
+      class="form-group col-lg-2 col-md-3 col-sm-6 col-12"
+      ng-show="data.datosAdicionales"
+    >
+      <label>Etiqueta: </label>
+      <select ng-model="data.idEtiqueta" class="form-control">
+        <option
+          ng-value="item.idEtiqueta"
+          ng-repeat="item in etiquetaActividades"
+        ></option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-9 col-lg-9">
+      <div id="my-tabular-table"></div>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
-     <button
-    type="button"
-    class="btn btn-success" 
-  >
+  <button type="button" class="btn btn-success">
     <i class="ti-save"></i> Guardar
   </button>
-  <button
-    type="button"
-    class="btn btn-dark"
-    (click)="closeModal()" 
-  >
-  &times; Cerrar
+  <button type="button" class="btn btn-dark" (click)="closeModal()">
+    &times; Cerrar
   </button>
 </div>

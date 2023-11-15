@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductModalComponent } from './product-modal.component';
+import { SubcategoryPageComponent } from './subcategory-page.component';
 
-describe('ProductModalComponent', () => {
-  let component: ProductModalComponent;
-  let fixture: ComponentFixture<ProductModalComponent>;
+describe('SubcategoryPageComponent', () => {
+  let component: SubcategoryPageComponent;
+  let fixture: ComponentFixture<SubcategoryPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductModalComponent]
+      imports: [SubcategoryPageComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ProductModalComponent);
+    fixture = TestBed.createComponent(SubcategoryPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

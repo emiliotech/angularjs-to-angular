@@ -10,11 +10,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: InjectSessionInterceptor,
-      multi: true
-    }, 
+        provide: HTTP_INTERCEPTORS,
+        useClass: InjectSessionInterceptor,
+        multi: true
+    },
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimations()
-  ]
+    provideAnimations(), 
+]
 };

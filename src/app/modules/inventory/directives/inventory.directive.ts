@@ -1,7 +1,7 @@
 import { Directive, HostListener, Input } from '@angular/core';
 import { ModalService } from '@core/services';
 import { MarcaModalComponent } from '../pages/marca-page/marca-modal';
-import { ProductModalComponent } from '../pages';
+import { ProductModalComponent, SubcategoryModalComponent } from '../pages';
 
 @Directive({
   selector: '[appMarcaAddUpdate]',
@@ -28,6 +28,27 @@ export class ProductAddUpdateDirective {
   @Input() resultModalHandler!: Function;
   @HostListener('click') onClick() {
     const modalRef = this.modalSvc.openModalCustom(ProductModalComponent, {size:'xl'});
+    modalRef.result.then(result => {
+      if (this.resultModalHandler) {
+        this.resultModalHandler(result);
+      }
+    })
+  }
+  constructor(private modalSvc: ModalService) { }
+}
+
+
+/**
+ * Category
+ */
+@Directive({
+  selector: '[appSubcategoryModal]',
+  standalone: true
+})
+export class SubcategoryModalDirective {
+  @Input() resultModalHandler!: Function;
+  @HostListener('click') onClick() {
+    const modalRef = this.modalSvc.openModalCustom(SubcategoryModalComponent);
     modalRef.result.then(result => {
       if (this.resultModalHandler) {
         this.resultModalHandler(result);

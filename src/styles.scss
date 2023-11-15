@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "ngx-toastr/toastr";
+@import  "tabulator-tables";
 
 /*Modal*/
 .backdrop-custom-modal {
-    z-index: 100 !important;
+    z-index: 1050 !important;
 }
 
 /*Form */
@@ -70,3 +71,4 @@
     transform: rotate(1turn);
   }
 }
+
