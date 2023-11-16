@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "ngx-toastr/toastr";
 @import  "tabulator-tables";
-
+ 
 /*Modal*/
 .backdrop-custom-modal {
     z-index: 1050 !important;
@@ -12,7 +12,24 @@
     border-color: blue !important;
 }
 
+/*Table*/
+.section-container-table {
+  height: 400px;
+  overflow: auto;
+}
 
+.mat-mdc-header-cell {
+    color: rgba(0,0,0,.54) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+.mat-mdc-cell {
+    color: rgba(0,0,0,.87) !important;
+    font-size: 11px !important;
+    border-top: 1px rgba(0,0,0,.12) solid !important;
+}
 /*Loader */
 .loading {
   display: inline-block;
@@ -71,4 +88,5 @@
     transform: rotate(1turn);
   }
 }
+
 

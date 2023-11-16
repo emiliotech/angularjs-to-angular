@@ -10,13 +10,114 @@
         </li>
         <li class="breadcrumb-item active">Dashboard 1</li>
       </ol> -->
-      <button 
-      type="button" 
-      class="btn btn-info d-none d-lg-block m-l-15" 
-      appProductAddUpdate 
+      <button
+        type="button"
+        class="btn btn-info m-l-15"
+        appProductAddUpdate
       >
         <i class="fa fa-plus-circle"></i> Nuevo
       </button>
     </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <section class="section-container-table">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- Options -->
+        <ng-container matColumnDef="op">
+          <th mat-header-cell *matHeaderCellDef>Op.</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Update"
+            ></button>
+            <!-- <button
+                mat-icon-button
+                color="warn"
+                aria-label="Delete"
+              >
+                <mat-icon>delete</mat-icon>
+              </button> -->
+          </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nro.</th>
+          <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+        </ng-container>
+
+        <!-- IDCard Column -->
+        <ng-container matColumnDef="s3ObjectUrl">
+          <th mat-header-cell *matHeaderCellDef>Imagen</th>
+          <td mat-cell *matCellDef="let element">
+            <img
+              class="img-fluid img-thumbnail"
+              width="50"
+              [src]="element.s3ObjectUrl"
+            />
+          </td>
+        </ng-container>
+
+        <!-- businessName Column -->
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Código</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.codigo }}
+          </td>
+        </ng-container>
+
+        <!-- tradeName Column -->
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.descripcion }}
+          </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="medida">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Medida</th>
+          <td mat-cell *matCellDef="let element">{{ element.medida }}</td>
+        </ng-container>
+
+        <!-- Address Column -->
+        <ng-container matColumnDef="subFamilia">
+          <th mat-header-cell *matHeaderCellDef>Subfamilia</th>
+          <td mat-cell *matCellDef="let element">{{ element.subFamilia }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef>Stock</th>
+          <td mat-cell *matCellDef="let element">{{ element.stock }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns;"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="7">
+            <!-- No data matching the filter {{ input.value }} -->
+          </td>
+        </tr>
+      </table>
+    </section>
+    <mat-paginator
+      [pageSizeOptions]="[25, 50, 100]"
+      showFirstLastButtons
+      aria-label="Select page of enterprises elements"
+    >
+    </mat-paginator>
   </div>
 </div>

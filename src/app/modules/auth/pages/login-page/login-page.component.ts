@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { hideLoader, showLoader } from '@core/utils';
+import { AuthService } from '@modules/auth/services';
+import { isApiResponse } from '@core/models';
+import { ToasterService } from '@core/services';
 
 @Component({
   selector: 'app-login-page',
@@ -13,16 +16,50 @@ import { hideLoader, showLoader } from '@core/utils';
 })
 export class LoginPageComponent {
   router = inject(Router);
+  authSvc = inject(AuthService)
+  tS = inject(ToasterService)
 
   signinForm = new FormGroup({
-    usuario: new FormControl('', Validators.required),
-    contrasenia: new FormControl('', Validators.required),
-  }); 
-  login(){
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+  });
+
+  signIn() {
     showLoader();
-    setTimeout(()=>{
-      hideLoader();
-      this.router.navigate(['/', 'admin']);
-    }, 1000)
+    const self = this;
+    console.log(this.signinForm)
+    this.authSvc.signIn(this.signinForm.value).subscribe({
+      next(response) {
+        if (isApiResponse(response)) {
+          if (response.code === "0") {
+            self.tS.toastr({
+              type: 'warning',
+              message: response.message
+            })
+          }
+          if (response.code === "1") {
+            let mainResponse = JSON.parse(response.payload);
+            console.log(mainResponse)
+            if (mainResponse.length == 1) {
+              let data = mainResponse[0];
+              localStorage.setItem('currentUser', data.token);
+              localStorage.setItem('userData', JSON.stringify(data));
+              self.router.navigate(['/', 'admin']);
+              self.tS.toastr({
+                type: 'success',
+                message: response.message
+              })
+            }
+          }
+        }
+      },
+      error(err) {
+        hideLoader()
+        console.log(err)
+      },
+      complete() {
+        hideLoader();
+      },
+    })
   }
 }

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '@modules/auth/services';
 
 @Component({
   selector: 'app-left-sidebar',
@@ -8,10 +9,9 @@ import { Router, RouterLink } from '@angular/router';
   imports: [CommonModule, RouterLink],
   templateUrl: './left-sidebar.component.html', 
 })
-export class LeftSidebarComponent {
-
-  router = inject(Router)
+export class LeftSidebarComponent { 
+  private authSvc = inject(AuthService)
   logout(){
-    this.router.navigate(['/', 'auth'])
+    this.authSvc.doLogout();
   }
 }

@@ -3,18 +3,20 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import {provideAnimations} from '@angular/platform-browser/animations'
+import { provideAnimations } from '@angular/platform-browser/animations'
 import { InjectSessionInterceptor } from './core/interceptors';
+import {  provideToastr } from 'ngx-toastr';
 
-export const appConfig: ApplicationConfig = { 
+export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     {
-        provide: HTTP_INTERCEPTORS,
-        useClass: InjectSessionInterceptor,
-        multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: InjectSessionInterceptor,
+      multi: true
     },
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimations(), 
-]
+    provideAnimations(),
+    provideToastr()
+  ],
 };

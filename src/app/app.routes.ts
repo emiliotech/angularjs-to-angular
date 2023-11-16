@@ -3,7 +3,7 @@ import { sessionGuard } from '@core/guards';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/auth/login',
+        redirectTo: '/admin',
         pathMatch: 'full'
     },
     {
