@@ -14,7 +14,10 @@ import { TabulatorFull as Tabulator } from 'tabulator-tables';
   encapsulation: ViewEncapsulation.None,
 })
 export class ProductModalComponent {
-
+  testData = {
+    name: 'subfamilia',
+    idSubFamilia: 0
+  }
   tableData: any[] = [
     { id: 1, name: "Oli Bob", age: "12", col: "red", dob: "" },
     { id: 2, name: "Mary May", age: "1", col: "blue", dob: "14/05/1982" },

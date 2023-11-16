@@ -22,7 +22,7 @@ export class ToasterService {
       progressBar: true,
       positionClass: 'toast-bottom-left',
       timeOut: 5000,
-      extendedTimeOut: 1000
+      extendedTimeOut: 1000, 
     }
     if (type === "success") {
       this.tS.success(message, title, options)

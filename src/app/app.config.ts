@@ -17,6 +17,8 @@ export const appConfig: ApplicationConfig = {
     },
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
-    provideToastr()
+    provideToastr({
+      preventDuplicates: true
+    })
   ],
 };

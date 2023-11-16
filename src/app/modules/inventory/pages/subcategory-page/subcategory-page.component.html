@@ -1,1 +1,128 @@
-<p>subcategory-page works!</p>
+<div ng-if="accion.leer">
+  <div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+      <h4>SubCategoría</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+      <div class="d-flex justify-content-end align-items-center">
+        <button
+          type="button" 
+          appSubcategoryModal 
+            [resultModalHandler]="resultModalHandler"
+          class="btn btn-info m-l-15"
+        >
+          <i class="ti-plus"></i> Nuevo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-9">
+              <span class="form-group pull-left page-size form-inline">
+                <select
+                  class="form-control form-control-border"
+                  [(ngModel)]="dataSearch.pageSize"
+                  (change)="changePageSize()"
+                >
+                  @for (item of recordsQuantity; track $index) {
+                  <option [value]="item">{{ item }}</option>
+                  }
+                </select>
+              </span>
+            </div>
+            <div class="col-lg-3 col-12">
+              <form class="form-material">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control border-color"
+                    ng-keyup="onKeyupSearch()"
+                    ng-model="dataSearch.bySearch"
+                    placeholder="Buscar"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      type="button"
+                      class="btn btn-info btn-xs" 
+                      (click)="getSubcategories()"
+                    >
+                      <i class="fas fa-redo"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th ng-if="accion.editar || accion.eliminar">Op</th>
+                  <th>N°</th>
+                  <th>Código</th>
+                  <th>Descripción</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of subCategories; track $index) {
+                <tr>
+                  <td ng-if="accion.editar || accion.eliminar">
+                    <button
+                      type="button"
+                      class="btn btn-info btn-xs"
+                      ng-if="accion.editar"
+                      appSubcategoryModal
+                      [params]="item"                      
+                       [resultModalHandler]="resultModalHandler"
+                      params="item"
+                    >
+                      <i class="ti-pencil"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-xs"
+                      ng-if="accion.eliminar"
+                      (click)="askToDelete(item.idSubFamilia)"
+                    >
+                      <i class="ti-trash"></i>
+                    </button>
+                  </td>
+                  <td>{{ $index + 1 }}</td>
+                  <td>{{ item.siglas }}</td>
+                  <td>{{ item.descripcion }}</td>
+                  <td ng-bind-html="item.estado|estadoPrimario"></td>
+                </tr>
+                } @if (subCategories.length===0) {
+                <tr class="text-center">
+                  <td colspan="5">No hay regsitros en esta tabla</td>
+                </tr>
+                }
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td align="center" colspan="8">
+                    <ngb-pagination
+                      [collectionSize]="totalRecords"
+                      [(page)]="dataSearch.pageIndex"
+                      [maxSize]="dataSearch.maxSize"
+                      [pageSize]="dataSearch.pageSize"
+                      [rotate]="true"
+                      (pageChange)="pageChanged()"
+                      [boundaryLinks]="true"
+                    />
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

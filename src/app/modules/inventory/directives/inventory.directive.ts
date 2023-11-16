@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { ModalService } from '@core/services';
 import { MarcaModalComponent } from '../pages/marca-page/marca-modal';
 import { ProductModalComponent, SubcategoryModalComponent } from '../pages';
@@ -9,7 +9,7 @@ import { ProductModalComponent, SubcategoryModalComponent } from '../pages';
 })
 export class MarcaAddUpdateDirective {
   @Input() resultModalHandler!: Function;
-  @HostListener('click') onClick() { 
+  @HostListener('click') onClick() {
     const modalRef = this.modalSvc.openModalCustom(MarcaModalComponent);
     modalRef.result.then(result => {
       if (this.resultModalHandler) {
@@ -17,7 +17,7 @@ export class MarcaAddUpdateDirective {
       }
     })
   }
-  constructor(private modalSvc: ModalService) { } 
+  constructor(private modalSvc: ModalService) { }
 }
 
 @Directive({
@@ -27,7 +27,7 @@ export class MarcaAddUpdateDirective {
 export class ProductAddUpdateDirective {
   @Input() resultModalHandler!: Function;
   @HostListener('click') onClick() {
-    const modalRef = this.modalSvc.openModalCustom(ProductModalComponent, {size:'xl'});
+    const modalRef = this.modalSvc.openModalCustom(ProductModalComponent, { size: 'xl' });
     modalRef.result.then(result => {
       if (this.resultModalHandler) {
         this.resultModalHandler(result);
@@ -47,13 +47,16 @@ export class ProductAddUpdateDirective {
 })
 export class SubcategoryModalDirective {
   @Input() resultModalHandler!: Function;
+  @Input() params = {};
+
   @HostListener('click') onClick() {
     const modalRef = this.modalSvc.openModalCustom(SubcategoryModalComponent);
+    modalRef.componentInstance.params = this.params || {};
     modalRef.result.then(result => {
-      if (this.resultModalHandler) {
+      if (this.resultModalHandler && typeof result === 'object') {
         this.resultModalHandler(result);
       }
     })
   }
-  constructor(private modalSvc: ModalService) { }
+  constructor(private modalSvc: ModalService, private el: ElementRef) { }
 }

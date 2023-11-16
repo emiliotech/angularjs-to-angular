@@ -1,8 +1,13 @@
 import { Routes } from "@angular/router";
-import { MarcaPageComponent, MedidaPageComponent, ProductPageComponent } from "./pages";
+import { MarcaPageComponent, MedidaPageComponent, ProductPageComponent, SubcategoryPageComponent } from "./pages";
 
 
 export const routes:Routes = [
+    {
+        path: 'product',
+        title: 'Producto',
+        component: ProductPageComponent
+    },
     {
         path: 'medida',
         title: 'Medida',
@@ -14,8 +19,9 @@ export const routes:Routes = [
         component: MarcaPageComponent
     },
     {
-        path: 'product',
-        title: 'Producto',
-        component: ProductPageComponent
-    }
+        path: 'subcategory',
+        title: 'Subcategoria',
+        component: SubcategoryPageComponent
+    },
+    
 ]
