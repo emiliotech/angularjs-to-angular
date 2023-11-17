@@ -14,8 +14,7 @@ import { MeasureModalDirective } from '@modules/inventory/directives';
   selector: 'app-medida-page',
   standalone: true,
   imports: [CommonModule, FormsModule, NgbPaginationModule, MeasureModalDirective],
-  templateUrl: './medida-page.component.html',
-  styleUrl: './medida-page.component.scss'
+  templateUrl: './medida-page.component.html', 
 })
 export class MedidaPageComponent {
   measureSvc = inject(MeasureService);
@@ -52,6 +51,9 @@ export class MedidaPageComponent {
     }
   }
 
+  resultModalHandler = ()=>{
+    this.getMeasures()
+  }
   ngOnInit(){
     this.getMeasures()
   }

@@ -10,7 +10,10 @@
         </li>
         <li class="breadcrumb-item active">Dashboard 1</li>
       </ol> -->
-      <button type="button" class="btn btn-info d-none d-lg-block m-l-15" appMeasureModal>
+      <button type="button" class="btn btn-info d-none d-lg-block m-l-15" 
+      appMeasureModal
+       [resultModalHandler]="resultModalHandler"
+      >
         <i class="ti-plus"></i> Nuevo
       </button>
     </div>
@@ -73,7 +76,12 @@
           @for(item of measures;track $index){
           <tr>
             <td>
-              <button class="btn btn-info btn-sm" ng-if="accion.editar" ng-click="openModalUserEdit(item)">
+              <button class="btn btn-info btn-sm" 
+              ng-if="accion.editar" 
+              appMeasureModal 
+              [params]="item"
+              [resultModalHandler]="resultModalHandler"
+              >
                   <i class="mdi mdi-pencil"></i>
               </button>
               <button class="btn btn-danger btn-sm ml-1" ng-if="accion.eliminar" (click)="askToDelete(item.idMedida)">
