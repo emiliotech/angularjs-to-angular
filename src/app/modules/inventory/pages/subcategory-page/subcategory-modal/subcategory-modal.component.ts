@@ -40,8 +40,7 @@ export class SubcategoryModalComponent {
     siglas: new FormControl<string>('', Validators.required),
     montoObjetivo: new FormControl(0),
     estado: new FormControl(false),
-  });
-  self = this;
+  }); 
   constructor(private activeModal: NgbActiveModal) {}
 
   private getCategories() {

@@ -1,233 +1,339 @@
-<div class="modal-header">
-  <h4 class="modal-title">Nuevo Producto</h4>
-  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-    &times;
-  </button>
-</div>
-<div class="modal-body">
-  <div class="row">
-    <div class="colxl-6 col-lg-6 col-md-6 col-12">
-      <div class="form-group">
-        <label for="description"
-          >Descripción: <span class="text-danger">*</span></label
-        >
-        <input
-          type="text"
-          class="form-control form-control-border"
-          placeholder="..."
-        />
-      </div>
-    </div>
-    <div class="colxl-6 col-lg-6 col-md-6 col-12">
-      <div class="form-group">
-        <label class="control-label"
-          >Subcategoría: <span class="text-danger">*</span></label
-        >
-        <div class="input-group">
-          <select
-            class="form-control border-select"
-            ng-model="data.idSubFamilia"
-            ng-change="getArticuloCodigo()"
-            ng-options="sf.idSubFamilia as sf.subFamilia group by sf.familia  for sf in subFamilias"
-          ></select>
-          <div class="input-group-append">
-            <button
-              class="btn btn-outline-secondary btn-sm"
-              appSubcategoryModal
-              [params]="testData"
-              type="button"
-              tabindex="-1"
-            >
-              <i class="fa fa-plus fa-xs"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+<form [formGroup]="dataForm" (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h4 class="modal-title">Nuevo Producto</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModal()"
+    >
+      &times;
+    </button>
   </div>
-  <div class="row">
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-      <div class="row">
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-          <div class="form-group">
-            <label for="">Código: <span class="text-danger">*</span></label>
-            <input
-              type="text"
-              ng-model="data.codigo"
-              class="form-control form-control-border"
-              placeholder="Ej: COM050"
-            />
-          </div>
-        </div>
-
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-          <div class="form-group">
-            <label for="">Código Aux: </label>
-            <input
-              type="text"
-              ng-model="data.codigoAuxiliar"
-              class="form-control form-control-border"
-              placeholder="Ej: COM050"
-            />
-          </div>
-        </div>
-
-        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-          <div class="form-group">
-            <label for=""
-              >Código de Barra: <span class="text-danger">*</span>
-            </label>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control form-control-border"
-                ng-model="data.codigoBarra"
-                touppercase
-                placeholder="H20089"
-                value=""
-              />
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-secondary"
-                  ng-click="getBarcode()"
+  <div class="modal-body">
+    <nav
+      ngbNav
+      #nav="ngbNav"
+      class="nav-tabs"
+      (navChange)="onNavChange($event)"
+    >
+      <ng-container ngbNavItem [ngbNavItem]="1">
+        <a ngbNavLink>General</a>
+        <ng-template ngbNavContent>
+          <div class="row">
+            <div class="colxl-6 col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                <label for="description"
+                  >Descripción: <span class="text-danger">*</span></label
                 >
-                  <i class="fas fa-barcode"></i>
-                </button>
+                <input
+                  type="text"
+                  class="form-control form-control-border"
+                  placeholder="..."
+                />
+              </div>
+            </div>
+            <div class="colxl-6 col-lg-6 col-md-6 col-12">
+              <div class="form-group">
+                <label for="subcategoría"
+                  >Subcategoría: <span class="text-danger">*</span></label
+                >
+
+                <div class="input-group">
+                  <select
+                    id="subcategoría"
+                    class="form-control form-control-border"
+                    name="subcategoría"
+                  >
+                    @for (group of groupedArrayCategories; track $index) {
+                    <optgroup [attr.label]="group.category">
+                      @for (item of group.subCategories; track $index) {
+                      <option [value]="item.idSubFamilia">
+                        {{ item.subFamilia }}
+                      </option>
+                      }
+                    </optgroup>
+                    }
+                  </select>
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      appSubcategoryModal
+                      type="button"
+                      tabindex="-1"
+                    >
+                      <i class="fa fa-plus fa-xs"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                  <div class="form-group">
+                    <label for="codigo"
+                      >Código: <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control form-control-border"
+                      placeholder="Ej: COM050"
+                      formControlName="codigo"
+                    />
+                  </div>
+                </div>
 
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-          <div class="form-group">
-            <label for=""
-              >Tipo Artículo: <span class="text-danger">*</span>
-            </label>
-            <select
-              class="form-control form-control-border"
-              ng-model="data.idTipoArticulo"
-            >
-              <option
-                ng-value="item.idTipoArticulo"
-                ng-repeat="item in tipoArticulos"
-              ></option>
-            </select>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                  <div class="form-group">
+                    <label for="codigoAuxiliar">Código Aux: </label>
+                    <input
+                      type="text"
+                      class="form-control form-control-border"
+                      placeholder="Ej: COM050"
+                      formControlName="codigoAuxiliar"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                  <div class="form-group">
+                    <label for="codigoBarra"
+                      >Código de Barra: <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control form-control-border"
+                        ng-model="data.codigoBarra"
+                        touppercase
+                        placeholder="H20089"
+                        formControlName="codigoBarra"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-outline-secondary"
+                          ng-click="getBarcode()"
+                        >
+                          <i class="fas fa-barcode"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <div class="form-group">
+                    <label for=""
+                      >Tipo Artículo: <span class="text-danger">*</span>
+                    </label>
+                    <select
+                      class="form-control form-control-border"
+                      formControlName="idTipoArticulo"
+                    >
+                      @for (item of tipoArticulos; track $index) {
+                      <option [value]="item.idTipoArticulo">
+                        {{ item.descripcion }}
+                      </option>
+                      }
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <div class="form-group">
+                    <label for="medida">Medida</label>
+                    <div class="input-group">
+                      <select
+                        class="form-control form-control-border"
+                        formControlName="idMedida"
+                      >
+                        @for (item of medidas; track $index) {
+                        <option [value]="item.idMedida">
+                          {{ item.descripcion }}
+                        </option>
+                        }
+                      </select>
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-outline-secondary btn-sm"
+                          btn-add-update-medida
+                          results="resultModalMedida(item)"
+                          tabindex="-1"
+                        >
+                          <i class="fa fa-plus fa-xs"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-          <div class="form-group">
-            <label for="">U. Medida</label>
-            <div class="input-group">
+          <div class="row" ng-show="tipoRegistro === 1">
+            <div class="form-group col-lg-2 col-md-6 col-sm-6 col-12">
+              <label for="tipoIVA">Tipo Iva: </label>
               <select
                 class="form-control form-control-border"
-                ng-model="data.idMedida"
-                ng-focus="delayFocus('.medida')"
+                ng-change="recalculateTarifaAdd()"
+                ng-disabled="!articlePermission.isUpdatePrice"
+                formControlName="idTipoIva"
               >
-                <option
-                  ng-value="item.idMedida"
-                  ng-repeat="item in medidas"
-                ></option>
+                @for (item of tipoIvas; track $index) {
+                <option [value]="item.idTipoIva">{{ item.descripcion }}</option>
+                }
               </select>
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-secondary btn-sm"
-                  btn-add-update-medida
-                  results="resultModalMedida(item)"
-                  tabindex="-1"
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-6">
+              <div class="form-group">
+                <label for=""
+                  >Precio Costo: <span class="text-danger">*</span></label
                 >
-                  <i class="fa fa-plus fa-xs"></i>
-                </button>
+                <input
+                  type="number"
+                  class="form-control form-control-border"
+                  decimal
+                  ng-focus="delayFocus('.precioCosto')"
+                  ng-model="data.precioCosto"
+                  ng-blur="redondearPrecioCosto()"
+                  ng-change="recalculateTarifaAdd()"
+                  formControlName="precioCosto"
+                  placeholder="0.00"
+                />
               </div>
             </div>
+            <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6">
+              <label for="">Precio Sin Subsidio:</label>
+              <input
+                type="number"
+                class="form-control form-control-border"
+                decimal
+                placeholder="0.00"
+                formControlName="precioSinSubsidio"
+              />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+              <div class="row align-items-center">
+                <div class="col-12">
+                  <mat-checkbox formControlName="llevaInventario"
+                    >Inventario</mat-checkbox
+                  >
+                </div>
+                <div class="col-12">
+                  <mat-checkbox formControlName="productoFraccionable"
+                    >Fraccionable</mat-checkbox
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
+              <div class="form-group text-center">
+                <label>Adicionales: </label>
+                <p>
+                  <mat-checkbox
+                    formControlName="datosAdicionales"
+                  ></mat-checkbox>
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
+              @if (dataForm.get('datosAdicionales')?.value) {
+              <div class="form-group">
+                <label>Etiqueta: </label>
+                <select
+                  class="form-control form-control-border"
+                  formControlName="idEtiqueta"
+                >
+                  @for (item of etiquetaActividades; track $index) {
+                  <option [value]="item.idEtiqueta">
+                    {{ item.descripcion }}
+                  </option>
+                  }
+                </select>
+              </div>
+              }
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row" ng-show="tipoRegistro === 1">
-    <div class="form-group col-lg-2 col-md-6 col-sm-6 col-12">
-      <label for="">Tipo Iva: </label>
-      <select
-        class="form-control border-select tipoIva"
-        ng-model="data.idTipoIva"
-        ng-change="recalculateTarifaAdd()"
-        ng-focus="delayFocus('.tipoIva')"
-        ng-disabled="!articlePermission.isUpdatePrice"
-      >
-        <option ng-value="item.idTipoIva" ng-repeat="item in tipoIvas"></option>
-      </select>
-    </div>
-    <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6">
-      <label for="">Precio Costo: <span class="text-danger">*</span></label>
-      <input
-        type="text"
-        class="form-control border-select precioCosto"
-        decimal
-        ng-focus="delayFocus('.precioCosto')"
-        ng-model="data.precioCosto"
-        ng-blur="redondearPrecioCosto()"
-        ng-change="recalculateTarifaAdd()"
-        placeholder="0.00"
-      />
-    </div>
-    <div class="form-group col-lg-2 col-md-6 col-sm-6 col-xs-6">
-      <label for="">Precio Sin Subsidio:</label>
-      <input
-        type="text"
-        class="form-control border-select precioSinSubsidio"
-        decimal
-        ng-focus="delayFocus('.precioSinSubsidio')"
-        ng-model="data.precioSinSubsidio"
-        placeholder="0.00"
-      />
-    </div>
-    <div class="col-lg-2 col-md-6 col-sm-6 col-12">
-      <div class="row align-items-center">
-        <div class="col-12">
-          <mat-checkbox>Inventario</mat-checkbox>
-        </div>
-        <div class="col-12">
-          <mat-checkbox>Fraccionable</mat-checkbox>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-      <div class="form-group text-center">
-        <label>Adicionales: </label>
-        <p><mat-checkbox></mat-checkbox></p>
-      </div>
-    </div>
-    <div
-      class="form-group col-lg-2 col-md-3 col-sm-6 col-12"
-      ng-show="data.datosAdicionales"
-    >
-      <label>Etiqueta: </label>
-      <select ng-model="data.idEtiqueta" class="form-control">
-        <option
-          ng-value="item.idEtiqueta"
-          ng-repeat="item in etiquetaActividades"
-        ></option>
-      </select>
-    </div>
-  </div>
+          <div class="row">
+            <div class="col-lg-10 col-12">
+              <div #tabularTablePVP></div>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+      <ng-container ngbNavItem [ngbNavItem]="2">
+        <a ngbNavLink>Datos Adicionales</a>
+        <ng-template ngbNavContent>
+          <p>
+            Exercitation +1 labore velit, blog sartorial PBR leggings next level
+            wes anderson artisan four loko farm-to-table craft beer twee. Qui
+            photo booth letterpress, commodo enim craft beer mlkshk aliquip jean
+            shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda
+            labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia
+            yr, vero magna velit sapiente labore stumptown. Vegan fanny pack
+            odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY
+            ethical culpa terry richardson biodiesel. Art party scenester
+            stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed
+            echo park.
+          </p>
+        </ng-template>
+      </ng-container>
+      <ng-container ngbNavItem [ngbNavItem]="3">
+        <a ngbNavLink>Código de Barras</a>
+        <ng-template ngbNavContent>
+          <p>
+            Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget
+            sodales nibh elit id diam. Nulla facilisi. Donec egestas ligula
+            vitae odio interdum aliquet. Duis lectus turpis, luctus eget
+            tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus.
+            Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed
+            diam urna, egestas ut ipsum vel, volutpat volutpat neque. Praesent
+            fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique
+            ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio.
+            Orci varius natoque penatibus et magnis dis parturient montes,
+            nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet
+            ultricies in eget neque. Phasellus nec tortor vel tellus pulvinar
+            feugiat.
+          </p>
+        </ng-template>
+      </ng-container>
+      <ng-container ngbNavItem [ngbNavItem]="4">
+        <a ngbNavLink>Ubicación</a>
+        <ng-template ngbNavContent>
+          <p>
+            Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget
+            sodales nibh elit id diam. Nulla facilisi. Donec egestas ligula
+            vitae odio interdum aliquet. Duis lectus turpis, luctus eget
+            tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus.
+            Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed
+            diam urna, egestas ut ipsum vel, volutpat volutpat neque. Praesent
+            fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique
+            ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio.
+            Orci varius natoque penatibus et magnis dis parturient montes,
+            nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet
+            ultricies in eget neque. Phasellus nec tortor vel tellus pulvinar
+            feugiat.
+          </p>
+        </ng-template>
+      </ng-container>
+    </nav>
 
-  <div class="row">
-    <div class="col-lg-9 col-lg-9">
-      <div id="my-tabular-table"></div>
-    </div>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
   </div>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-success">
-    <i class="ti-save"></i> Guardar
-  </button>
-  <button type="button" class="btn btn-dark" (click)="closeModal()">
-    &times; Cerrar
-  </button>
-</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success">
+      <i class="ti-save"></i> Guardar
+    </button>
+    <button type="button" class="btn btn-dark" (click)="closeModal()">
+      &times; Cerrar
+    </button>
+  </div>
+</form>
