@@ -1,0 +1,129 @@
+<div class="row page-titles">
+  <div class="col-md-5 align-self-center">
+    <h4 class="text-themecolor">Tarifas</h4>
+  </div>
+  <div class="col-md-7 align-self-center text-right">
+    <div class="d-flex justify-content-end align-items-center"></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr class="text-center">
+            <th ng-if="accion.editar">Op.</th>
+            <th>N°</th>
+            <th>Código</th>
+            <th>Descripcion</th>
+            <th>Predeterminado</th>
+            <th>Venta al por mayor</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(item of tarifas;track $index){
+          <tr class="text-center">
+            <td ng-if="accion.editar">
+              <button
+                type="button"
+                ng-if="accion.editar"
+                class="btn btn-info btn-xs"
+                tooltip
+                data-toggle="toggle"
+                title="Editar"
+                (click)="open(item)"
+              >
+                <i class="ti-pencil"></i>
+              </button>
+            </td>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ item.codigo }}</td>
+            <td>{{ item.descripcion }}</td>
+            <td>
+              @if(item.predeterminada){
+              <span class="badge badge-success"> SI </span>
+              }
+            </td>
+            <td>
+              @if(item.ventaPorMayor){
+              <span class="badge badge-success"> SI </span>
+              } @else{
+              <span class="badge badge-info"> NO </span>
+              }
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #tarifaModal let-modal>
+  <form [formGroup]="dataForm" (ngSubmit)="save()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Editar tarifa</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        &times;
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="form-group">
+            <label for="descripcion"
+              >Descripcion <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              touppercase
+              class="form-control form-control-border"
+              placeholder="Ej: Contado"
+              formControlName="descripcion"
+            />
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="form-group">
+            <label for="descripcion">Codigo: <span class="text-danger">*</span> </label>
+            <input
+              type="text"
+              class="form-control"
+              touppercase
+              placeholder="Ej: CON"
+              formControlName="codigo"
+            />
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="icheck-primary">
+            <input
+              type="checkbox"
+              formControlName="ventaPorMayor"
+              id="ventaPorMayor"
+            />
+            <label for="ventaPorMayor">Venta por mayor</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success" ngbAutofocus [disabled]="!dataForm.valid">
+        <i class="ti-pencil-alt"></i> Actualizar
+      </button>
+      <button
+        type="button"
+        class="btn btn-dark"
+        (click)="modal.close('Save click')"
+      >
+        &times; Cerrar
+      </button>
+    </div>
+  </form>
+</ng-template>

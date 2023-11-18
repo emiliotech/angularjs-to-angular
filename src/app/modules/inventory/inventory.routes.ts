@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { MarcaPageComponent, MedidaPageComponent, ProductPageComponent, SubcategoryPageComponent } from "./pages";
+import { MarcaPageComponent, MedidaPageComponent, ProductPageComponent, SubcategoryPageComponent, TarifaPageComponent } from "./pages";
 
 
 export const routes:Routes = [
@@ -22,6 +22,11 @@ export const routes:Routes = [
         path: 'subcategory',
         title: 'Subcategoria',
         component: SubcategoryPageComponent
+    },
+    {
+        path: 'tarifa',
+        title: 'Tarifa',
+        component: TarifaPageComponent
     },
     
 ]

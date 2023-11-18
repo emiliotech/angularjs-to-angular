@@ -4,3 +4,4 @@ export * from './measure.service';
 export * from './model.service';
 export * from './product.service';
 export * from './subcategory.service';
+export * from './tarifa.service';
